@@ -1,0 +1,25 @@
+{
+  "name": "excel-annotation",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc-watch --onSuccess \"nodemon dist/Server.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "@types/node": "^8.5.1",
+    "tsc-watch": "^1.0.13"
+  }
+}
