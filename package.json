@@ -13,9 +13,9 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-  },
+  "bugs": {},
   "dependencies": {
+    "excel4node": "^1.3.5",
     "express": "^4.16.2"
   },
   "devDependencies": {
