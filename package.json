@@ -16,6 +16,7 @@
   "bugs": {},
   "dependencies": {
     "excel4node": "^1.3.5",
+    "exceljs": "^0.8.3",
     "express": "^4.16.2"
   },
   "devDependencies": {

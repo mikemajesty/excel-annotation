@@ -1,38 +1,39 @@
 import * as excel from 'excel4node';
+var excel = require("exceljs");
 
-export class Example {
-
-    createExcel(): void {
-        var workbook = new excel.Workbook();
-
-        // Add Worksheets to the workbook
-        var worksheet = workbook.addWorksheet('Sheet 1');
-        var worksheet2 = workbook.addWorksheet('Sheet 2');
-
-        // Create a reusable style
-        var style = workbook.createStyle({
-        font: {
-            color: '#FF0800',
-            size: 12
-        },
-        numberFormat: '$#,##0.00; ($#,##0.00); -'
-        });
-
-        // Set value of cell A1 to 100 as a number type styled with paramaters of style
-        worksheet.cell(1,1).number(100).style(style);
-
-        // Set value of cell B1 to 300 as a number type styled with paramaters of style
-        worksheet.cell(1,2).number(200).style(style);
-
-        // Set value of cell C1 to a formula styled with paramaters of style
-        worksheet.cell(1,3).formula('A1 + B1').style(style);
-
-        // Set value of cell A2 to 'string' styled with paramaters of style
-        worksheet.cell(2,1).string('string').style(style);
-
-        // Set value of cell A3 to true as a boolean type styled with paramaters of style but with an adjustment to the font size.
-        worksheet.cell(3,1).bool(true).style(style).style({font: {size: 14}});
-
-        workbook.write('Excel.xlsx');
-    }
+export async function createExcel(res): Promise<any> {
+    var workbook = new excel.Workbook();
+    let fileName = "mike" + '.xlsx';
+    workbook.creator = 'Me';
+    workbook.lastModifiedBy = 'Her';
+    workbook.created = new Date(1985, 8, 30);
+    workbook.modified = new Date();
+    workbook.lastPrinted = new Date(2016, 9, 27);
+    var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+    sheet.columns = [
+        { header: 'Id', key: 'id', width: 10 },
+        { header: 'Name', key: 'name', width: 32 },
+        { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
+    ];
+    
+    // Access an individual columns by key, letter and 1-based column number
+    var idCol = sheet.getColumn('id');
+    var nameCol = sheet.getColumn('B');
+    var dobCol = sheet.getColumn(3);
+    //https://github.com/guyonroche/exceljs#set-workbook-properties
+    // set column properties
+    
+    // Note: will overwrite cell value C1
+    dobCol.header = 'Date of Birth';
+    
+    // Note: this will overwrite cell values C1:C2
+    dobCol.header = ['Date of Birth', 'A.K.A. D.O.B.'];
+    
+    // from this point on, this column will be indexed by 'dob' and not 'DOB'
+    dobCol.key = 'dob';
+    
+    dobCol.width = 15;
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+    return await workbook.xlsx.write(res)
 }
