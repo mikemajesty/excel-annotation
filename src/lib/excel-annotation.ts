@@ -1,7 +1,15 @@
-import * as excel from 'excel4node';
 var excel = require("exceljs");
+import { Example } from '../model/Example';
 
 export async function createExcel(res): Promise<any> {
+    const result = await new Example().getExample()
+    result.forEach((item) => {
+        console.log(`getOwnPropertyDescriptor`, Object.getOwnPropertyDescriptor(item.city, `city`));
+        console.log(`getOwnPropertyNames`, Object.getOwnPropertyNames(Example.prototype));
+        console.log(`getOwnPropertySymbols`, Object.getOwnPropertySymbols(Example.prototype));
+        console.log(`getPrototypeOf`, Object.getPrototypeOf(Example.prototype));
+    });
+
     var workbook = new excel.Workbook();
     let fileName = "mike" + '.xlsx';
     workbook.creator = 'Me';
