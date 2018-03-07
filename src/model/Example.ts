@@ -16,16 +16,23 @@ const ColumnName = (columnName: string)  => {
       });
   }
 }
+
+function decoratorExpression(target) {
+  // Add a property on target
+  target.annotated = true;
+}
+
+@decoratorExpression
 export class Example {
 
-  @ColumnName('Name') 
-  public name: string;
+  
+  name: string;
   @ColumnName('Cidade')
-  public city: string;
+  city: string;
   @ColumnName('Sobrenome')
-  public lastName: string;
+  lastName: string;
   @ColumnName('Idade')
-  public age: number;
+  age: number;
 
   examples?: Example[];
 
@@ -33,6 +40,9 @@ export class Example {
     this.examples = new Array<Example>();
   }
 
+  getAnnotation(): Symbol {
+    return Symbol('ColumnName');
+  }
   async getExample(): Promise<Example[]> {
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(index => {
       const e = new Example();

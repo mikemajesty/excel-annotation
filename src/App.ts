@@ -18,7 +18,7 @@ class App {
     })
     router.get('/example', (req, res) =>  {
      
-      service.createExcel(res).then(function() {
+      service.Excel.create(res).then(function() {
         res.end();
       });
     });
