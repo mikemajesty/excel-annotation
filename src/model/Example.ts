@@ -25,7 +25,7 @@ function decoratorExpression(target) {
 @decoratorExpression
 export class Example {
 
-  
+  @ColumnName('Cidade')
   name: string;
   @ColumnName('Cidade')
   city: string;
@@ -50,5 +50,17 @@ export class Example {
       this.examples.push(e);
     });
     return await this.examples;
+  }
+
+  public static getGetters(): string[] {
+    return Reflect.ownKeys(this.prototype).filter(name => {
+        return typeof Reflect.getOwnPropertyDescriptor(this.prototype, name)["get"] === "function";
+    }) as string[];
+  }
+
+  public static getSetters(): string[] {
+      return Reflect.ownKeys(this.prototype).filter(name => {
+          return typeof Reflect.getOwnPropertyDescriptor(this.prototype, name)["set"] === "function";
+      }) as string[];
   }
 }

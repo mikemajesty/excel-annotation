@@ -12,20 +12,8 @@ export class Excel {
 
     public static async create(res: any): Promise<any> {
         
-        const result = await new Example().getExample()
-
-        const f = Reflect.getMetadata('parameters', Example);
-        console.log(f);
-        result.forEach((item) => {
-            const mike = Reflect.metadata("design:type", Example);
-            console.log(`tipo`, mike);
-            const mike2 = Reflect.metadata("design:paramtypes", Example);
-            console.log(mike2);
-            const mike3 = Reflect.metadata("design:returntype", Example);
-            console.log(mike3);
-            let paramTypes = Reflect.getMetadata("design:paramtypes", new Example(), "name");
-            console.log(paramTypes);
-        });
+        const result = await new Example().getExample();
+        console.log(Example.getGetters());
         
         var workbook = new excel.Workbook();
         let fileName = "mike" + '.xlsx';
