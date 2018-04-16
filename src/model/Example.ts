@@ -1,7 +1,9 @@
+import "reflect-metadata";
+
+let ojb = { };
 const ColumnName = (columnName: string)  => {
   return (target: Object, key: string | symbol) => {
       let value = target[key];
-      console.log('value - - - ', value)
       const getter = () =>  value;
       const setter = (val) => {
           if (!columnName) {
@@ -10,22 +12,39 @@ const ColumnName = (columnName: string)  => {
           value = val;
       }
       Reflect.deleteProperty[key];
+      Reflect.defineMetadata(key, value, this);
+
+      this.prototype = {
+        greet: function () {
+            return 'Hello, my name is ' + this.name;
+        }
+    };
+
+    Object.create(Object.prototype, {
+      foo: { value: 123, enumerable: true },
+      bar: { value: "abc", enumerable: true }
+    });
+
+      Reflect.defineMetadata('ColumnName', key, target);
+
       Reflect.defineProperty(target, key, {
           get: getter,
           set: setter
       });
+
+      this.add = () => {
+        return {
+          get: getter,
+          set: setter
+        };
+      }
+      return this.add();
   }
 }
 
-function decoratorExpression(target) {
-  // Add a property on target
-  target.annotated = true;
-}
-
-@decoratorExpression
 export class Example {
 
-  @ColumnName('Cidade')
+  @ColumnName('Nome')
   name: string;
   @ColumnName('Cidade')
   city: string;
@@ -40,9 +59,6 @@ export class Example {
     this.examples = new Array<Example>();
   }
 
-  getAnnotation(): Symbol {
-    return Symbol('ColumnName');
-  }
   async getExample(): Promise<Example[]> {
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(index => {
       const e = new Example();
@@ -54,6 +70,9 @@ export class Example {
 
   public static getGetters(): string[] {
     return Reflect.ownKeys(this.prototype).filter(name => {
+        if (typeof Reflect.getOwnPropertyDescriptor(this.prototype, name)["get"] === "function") {
+          console.log(name)
+        }
         return typeof Reflect.getOwnPropertyDescriptor(this.prototype, name)["get"] === "function";
     }) as string[];
   }
@@ -62,5 +81,9 @@ export class Example {
       return Reflect.ownKeys(this.prototype).filter(name => {
           return typeof Reflect.getOwnPropertyDescriptor(this.prototype, name)["set"] === "function";
       }) as string[];
+  }
+
+  public static getFormat(target: any, propertyKey: string) {
+    return Reflect.getMetadata('ColumnName', target, propertyKey);
   }
 }
