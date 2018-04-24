@@ -4,22 +4,6 @@ import { log } from "util";
 let ojb = [];
 const ColumnName = (columnName: string) => {
   return (target: Object, key: string | symbol) => {
-    let value = target[key];
-    const getter = () => value;
-    const setter = (val) => {
-      if (!columnName) {
-        throw new Error(`Column name is required`);
-      }
-      value = val;
-    }
-    Reflect.deleteProperty[key];
-    Reflect.defineMetadata(key, value, this);
-
-    Reflect.defineProperty(target, key, {
-      get: getter,
-      set: setter
-    });
-
     ojb.push({ columnName, key });
   }
 }
