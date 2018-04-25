@@ -1,22 +1,46 @@
 import "reflect-metadata";
 import { log } from "util";
 
-let ojb = [];
+let ojb = {
+  columnNames: [],
+  columnWidth: [],
+  columnStyles: []
+};
 const ColumnName = (columnName: string) => {
   return (target: Object, key: string | symbol) => {
-    ojb.push({ columnName, key });
+    ojb.columnNames.push({ columnName, key });
+  }
+}
+
+const ColumnWidth = (columnWidth: number) => {
+  return (target: Object, key: string | symbol) => {
+    ojb.columnWidth.push({ columnWidth, key });
+  }
+}
+
+const ColumnContentStyle = (columnStyle: Object) => {
+  return (target: Object, key: string | symbol) => {
+    ojb.columnStyles.push({ columnStyle, key });
   }
 }
 
 export class Example {
 
   @ColumnName('Nome')
+  @ColumnWidth(50)
+  @ColumnContentStyle({ font: { name: 'Courier' } })
   name: string;
   @ColumnName('Cidade')
+  @ColumnWidth(50)
+  @ColumnContentStyle({ font: { name: 'Arial Black' } })
   city: string;
   @ColumnName('Sobrenome')
+  @ColumnWidth(50)
+  @ColumnContentStyle({ font: { name: 'Arial Black' } })
   lastName: string;
   @ColumnName('Idade')
+  @ColumnWidth(20)
+  @ColumnContentStyle({ font: { name: 'Arial Black' } })
   age: number;
 
   examples?: Example[];

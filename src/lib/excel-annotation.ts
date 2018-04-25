@@ -23,8 +23,8 @@ export class Excel {
         workbook.lastPrinted = new Date(2016, 9, 27);
         var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
-        sheet.columns = Example.getExecel().map(e => {
-            return { header: e.columnName, key: e.key, width: 10, style: { font: { name: 'Arial Black' } }  }
+        sheet.columns = Example.getExecel().columnNames.map(e => {
+            return { header: e.columnName, key: e.key, width: this.getColumnWidth(e.key), style: this.getColumnStyle(e.key) }
         });
         
         result.forEach(c => {
@@ -35,4 +35,14 @@ export class Excel {
         res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
         return await workbook.xlsx.write(res)
     }
+
+    private static getColumnWidth(key: string): number {
+        return Example.getExecel().columnWidth.filter(c => c.key === key)[0].columnWidth;
+    }
+
+    private static getColumnStyle(key: string): number {
+        return Example.getExecel().columnStyles.filter(c => c.key === key)[0].columnStyle;
+    }
+
+    
 }
