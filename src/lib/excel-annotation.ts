@@ -3,6 +3,7 @@ import { Example } from '../model/Example';
 import "reflect-metadata";
 
 import { getType } from "reflect-helper";
+import { log } from 'util';
 
 export class Excel {
 
@@ -24,8 +25,26 @@ export class Excel {
         var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
         sheet.columns = Example.getExecel().columnNames.map(e => {
-            return { header: e.columnName, key: e.key, width: this.getColumnWidth(e.key), style: this.getColumnStyle(e.key) }
+            return { header: e.columnName, key: e.key, width: this.getColumnWidth(e.key) }
         });
+
+        const columnNames = Example.getExecel().columnNames;
+        sheet.lastRow.eachCell( (cell, index) => {
+            cell.style = this.getColumnStyle(columnNames[index - 1].key);
+        });
+
+        /*sheet.columns.forEach( (e, i) => {
+            sheet.lastRow.eachCell
+            const cell = sheet.lastRow.getCell(i + 1);
+            cell.style = this.getColumnStyle(e.key);
+        });
+        /*for (let index = 0; index < sheet.columns.length; index++) {
+            const element = sheet.lastRow;
+            const cell = element.getCell(index + 1);
+            console.log(cell);
+            //this.getColumnStyle(e.key)
+            
+        }*/
         
         result.forEach(c => {
             sheet.addRow(c);

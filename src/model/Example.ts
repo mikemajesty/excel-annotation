@@ -28,7 +28,7 @@ export class Example {
 
   @ColumnName('Nome')
   @ColumnWidth(50)
-  @ColumnContentStyle({ font: { name: 'Courier' } })
+  @ColumnContentStyle({ font: { name: 'Arial Black' } })
   name: string;
   @ColumnName('Cidade')
   @ColumnWidth(50)
