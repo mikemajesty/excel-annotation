@@ -2,13 +2,13 @@ import "reflect-metadata";
 import { log } from "util";
 
 let ojb = {
-  columnNames: [],
+  columnName: [],
   columnWidth: [],
-  columnStyles: []
+  columnHeaderStyle: []
 };
 const ColumnName = (columnName: string) => {
   return (target: Object, key: string | symbol) => {
-    ojb.columnNames.push({ columnName, key });
+    ojb.columnName.push({ columnName, key });
   }
 }
 
@@ -18,9 +18,9 @@ const ColumnWidth = (columnWidth: number) => {
   }
 }
 
-const ColumnContentStyle = (columnStyle: Object) => {
+const ColumnHeaderStyle = (columnStyle: Object) => {
   return (target: Object, key: string | symbol) => {
-    ojb.columnStyles.push({ columnStyle, key });
+    ojb.columnHeaderStyle.push({ columnStyle, key });
   }
 }
 
@@ -28,19 +28,19 @@ export class Example {
 
   @ColumnName('Nome')
   @ColumnWidth(50)
-  @ColumnContentStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
   name: string;
   @ColumnName('Cidade')
   @ColumnWidth(50)
-  @ColumnContentStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
   city: string;
   @ColumnName('Sobrenome')
   @ColumnWidth(50)
-  @ColumnContentStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
   lastName: string;
   @ColumnName('Idade')
   @ColumnWidth(20)
-  @ColumnContentStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
   age: number;
 
   examples?: Example[];

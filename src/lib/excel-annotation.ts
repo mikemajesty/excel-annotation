@@ -24,28 +24,16 @@ export class Excel {
         workbook.lastPrinted = new Date(2016, 9, 27);
         var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
-        sheet.columns = Example.getExecel().columnNames.map(e => {
+        sheet.columns = Example.getExecel().columnName.map(e => {
             return { header: e.columnName, key: e.key, width: this.getColumnWidth(e.key) }
         });
 
-        const columnNames = Example.getExecel().columnNames;
+        const columnName = Example.getExecel().columnName;
+
         sheet.lastRow.eachCell( (cell, index) => {
-            cell.style = this.getColumnStyle(columnNames[index - 1].key);
+            cell.style = this.getColumnStyle(columnName[index - 1].key);
         });
 
-        /*sheet.columns.forEach( (e, i) => {
-            sheet.lastRow.eachCell
-            const cell = sheet.lastRow.getCell(i + 1);
-            cell.style = this.getColumnStyle(e.key);
-        });
-        /*for (let index = 0; index < sheet.columns.length; index++) {
-            const element = sheet.lastRow;
-            const cell = element.getCell(index + 1);
-            console.log(cell);
-            //this.getColumnStyle(e.key)
-            
-        }*/
-        
         result.forEach(c => {
             sheet.addRow(c);
         })
@@ -60,7 +48,7 @@ export class Excel {
     }
 
     private static getColumnStyle(key: string): number {
-        return Example.getExecel().columnStyles.filter(c => c.key === key)[0].columnStyle;
+        return Example.getExecel().columnHeaderStyle.filter(c => c.key === key)[0].columnStyle;
     }
 
     
