@@ -34,8 +34,6 @@ export class Excel {
             cell.style = this.getColumnHeaderStyle(columnName[index - 1].key);
         });
 
-        //getColumnContentStyle
-
         result.forEach(c => {
             sheet.addRow(c);
             sheet.lastRow.eachCell( (cell, index) => {
