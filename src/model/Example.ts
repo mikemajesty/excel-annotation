@@ -45,6 +45,7 @@ export class Example {
     size: 12,
     italic: true
   }})
+
   name: string;
   @ColumnName('Cidade')
   @ColumnWidth(50)
@@ -58,6 +59,7 @@ export class Example {
     size: 12,
     italic: true
   }})
+
   city: string;
   @ColumnName('Sobrenome')
   @ColumnWidth(50)
@@ -71,6 +73,7 @@ export class Example {
     size: 12,
     italic: true
   }})
+
   lastName: string;
   @ColumnName('Idade')
   @ColumnWidth(20)
