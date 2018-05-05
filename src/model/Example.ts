@@ -4,7 +4,8 @@ import { log } from "util";
 let ojb = {
   columnName: [],
   columnWidth: [],
-  columnHeaderStyle: []
+  columnHeaderStyle: [],
+  columnContentStyle: []
 };
 const ColumnName = (columnName: string) => {
   return (target: Object, key: string | symbol) => {
@@ -24,23 +25,65 @@ const ColumnHeaderStyle = (columnStyle: Object) => {
   }
 }
 
+const ColumnContentStyle = (columnStyle: Object) => {
+  return (target: Object, key: string | symbol) => {
+    ojb.columnContentStyle.push({ columnStyle, key });
+  }
+}
+
 export class Example {
 
   @ColumnName('Nome')
   @ColumnWidth(50)
-  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ 
+    font: { name: 'Arial Black' },
+    alignment: { vertical: 'middle', horizontal: 'center' }
+  })
+  @ColumnContentStyle( { font: {  
+    color: { argb: '9b7d8f' },
+    family: 2,
+    size: 12,
+    italic: true
+  }})
   name: string;
   @ColumnName('Cidade')
   @ColumnWidth(50)
-  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ 
+    font: { name: 'Arial Black' },
+    alignment: { vertical: 'middle', horizontal: 'center' }
+  })
+  @ColumnContentStyle( { font: {  
+    color: { argb: '9b7d8f' },
+    family: 2,
+    size: 12,
+    italic: true
+  }})
   city: string;
   @ColumnName('Sobrenome')
   @ColumnWidth(50)
-  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ 
+    font: { name: 'Arial Black' },
+    alignment: { vertical: 'middle', horizontal: 'center' }
+  })
+  @ColumnContentStyle( { font: {  
+    color: { argb: '9b7d8f' },
+    family: 2,
+    size: 12,
+    italic: true
+  }})
   lastName: string;
   @ColumnName('Idade')
   @ColumnWidth(20)
-  @ColumnHeaderStyle({ font: { name: 'Arial Black' } })
+  @ColumnHeaderStyle({ 
+    font: { name: 'Arial Black' },
+    alignment: { vertical: 'middle', horizontal: 'center' }
+  })
+  @ColumnContentStyle( { font: {  
+    color: { argb: '9b7d8f' },
+    family: 2,
+    size: 12,
+    italic: true
+  }})
   age: number;
 
   examples?: Example[];

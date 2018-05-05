@@ -31,11 +31,16 @@ export class Excel {
         const columnName = Example.getExecel().columnName;
 
         sheet.lastRow.eachCell( (cell, index) => {
-            cell.style = this.getColumnStyle(columnName[index - 1].key);
+            cell.style = this.getColumnHeaderStyle(columnName[index - 1].key);
         });
+
+        //getColumnContentStyle
 
         result.forEach(c => {
             sheet.addRow(c);
+            sheet.lastRow.eachCell( (cell, index) => {
+                cell.style = this.getColumnContentStyle(columnName[index - 1].key);
+            });
         })
     
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -47,9 +52,11 @@ export class Excel {
         return Example.getExecel().columnWidth.filter(c => c.key === key)[0].columnWidth;
     }
 
-    private static getColumnStyle(key: string): number {
+    private static getColumnHeaderStyle(key: string): number {
         return Example.getExecel().columnHeaderStyle.filter(c => c.key === key)[0].columnStyle;
     }
 
-    
+    private static getColumnContentStyle(key: string): number {
+        return Example.getExecel().columnContentStyle.filter(c => c.key === key)[0].columnStyle;
+    }
 }
