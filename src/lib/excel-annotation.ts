@@ -16,13 +16,13 @@ export class Excel {
         const result = await new Example().getExample();
         
         var workbook = new excel.Workbook();
-        let fileName = "mike" + '.xlsx';
+        let fileName = "report_example" + '.xlsx';
         workbook.creator = 'Me';
         workbook.lastModifiedBy = 'Her';
-        workbook.created = new Date(1985, 8, 30);
+        workbook.created = new Date();
         workbook.modified = new Date();
-        workbook.lastPrinted = new Date(2016, 9, 27);
-        var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+        workbook.lastPrinted = new Date();
+        var sheet = workbook.addWorksheet('My Sheet', { properties:{ tabColor:{ argb:'FFC0000'} } });
 
         sheet.columns = Example.getExecel().columnName.map(e => {
             return { header: e.columnName, key: e.key, width: this.getColumnWidth(e.key) }
